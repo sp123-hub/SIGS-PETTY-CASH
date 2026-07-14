@@ -41,8 +41,8 @@ h1{
 }
 .card:first-child { margin-left: 0;  border-bottom: 4px solid #3498db; }
 .card:nth-child(2) { border-bottom: 4px solid #e74c3c; }
-.card:last-child { margin-right: 0; border-bottom: 4px solid #2ecc71; }
-.card.negative { border-bottom: 4px solid #c0392b; color: #c0392b; }
+.card:last-child { margin-right: 0; border-bottom: 4px solid #2ecc71; color:white; background-color:green; }
+.card.negative { border-bottom: 4px solid #c0392b; color: #c0392b; background-color:red; }
 
 .add-form {
     display: grid;
