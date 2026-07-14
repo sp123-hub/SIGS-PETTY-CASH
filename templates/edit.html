@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="divEdit">
+        <h1>Edit Transaction</h1>
+        <form action="{{ url_for('edit', id=transaction['id']) }}" method="post" class="edit-form edit-mode">
+            <label>Date:</label>
+            <input type="date" name="date" value="{{ transaction['date'] }}" required>
+            
+            <label>Description:</label>
+            <input type="text" name="description" value="{{ transaction['description'] }}" required>
+            
+            <label>Type:</label>
+            <select name="type" required>
+                <option value="Expense" {% if transaction['type'] == 'Expense' %}selected{% endif %}>Expense</option>
+                <option value="Received" {% if transaction['type'] == 'Received' %}selected{% endif %}>Received Cash</option>
+            </select>
+            
+            <label>Amount (₹):</label>
+            <input type="number" step="0.01" name="amount" value="{{ transaction['amount'] }}" required>
+            <label>Attached File:</label>
+            {% if transaction['file'] %}
+                <p>Current File: <a href="{{ url_for('static', filename='uploads/' ~ transaction['file']) }}" target="_blank">{{ transaction['file'] }}</a></p>
+            {% else %}
+                <p>No file attached.</p>
+            {% endif %}
+            
+            
+            <button class="updBtn" type="submit">Update Record</button>
+            <a href="{{ url_for('index') }}" class="cancel-btn">BACK TO HOME</a>
+        </form>
+    </div>
+</body>
+</html>

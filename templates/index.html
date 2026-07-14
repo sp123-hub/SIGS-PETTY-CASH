@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FREYSSINET KALYANI SIGS Petty Cash Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="containerIndex">
+        <h1 STYLE="text-align: center;">SIGS KALYANI PETTY CASH TRACKER</h1>
+        
+        <div class="summary-cards">
+            <div class="card">Total Received: ₹{{ "%.2f"|format(received) }}</div>
+            <div class="card">Total Expenses: ₹{{ "%.2f"|format(expenses) }}</div>
+            <div class="card {% if balance < 0 %}negative{% endif %}">Remaining Balance: ₹{{ "%.2f"|format(balance) }}</div>
+        </div>
+
+        <h2>Add New Entry</h2>
+        <form action="{{ url_for('add') }}" method="post" class="add-form" enctype="multipart/form-data">
+            <input type="date" name="date" required>
+            <input type="text" name="description" placeholder="Description (e.g., Labor count, Gate pass fee)" required>
+            <select name="type" required>
+                <option value="Expense">Expense</option>
+                <option value="Received">Received Cash</option>
+            </select>
+            <input type="number" step="0.01" name="amount" placeholder="Amount (₹)" required>
+            <!-- attach file -->
+            <input type="file" name="file">
+            
+           <div> 
+            <button type="submit">Add Record</button> 
+           </div>
+        </form>
+        
+        <h2>Transaction History</h2>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Amount (₹)</th>
+                <th>Actions</th>
+                <th>Attached File</th>
+            </tr>
+            {% for row in transactions %}
+            <tr>
+                <td>{{ row['date'] }}</td>
+                <td>{{ row['description'] }}</td>
+                <td class="{{ 'text-green' if row['type'] == 'Received' else 'text-red' }}">{{ row['type'] }}</td>
+                <td>{{ "%.2f"|format(row['amount']) }}</td>
+                
+                <td>
+                    <a href="{{ url_for('edit', id=row['id']) }}" class="edit-btn">Edit</a>
+                </td>
+                <td>
+                   {% if row['file'] %}
+                      <a href="{{ url_for('static', filename='uploads/' ~ row['file']) }}" target="_blank">View File</a>
+                       {% else %}
+                       <span style="color: gray;">None</span>
+                   {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
