@@ -7,7 +7,7 @@ body {
     font-weight: bold;
 }
 .containerIndex {
-    max-width: 80%;
+    max-width: 90%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -47,8 +47,8 @@ h1{
 
 .add-form {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    gap: 15px;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
     margin-bottom: 30px;
     justify-content: space-evenly;
 }
